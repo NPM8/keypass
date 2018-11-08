@@ -13,6 +13,9 @@
                 <li class="nav-item {{ Request::path() ? 'active' : '' }}">
                     <a class="nav-link" href="{{ route('home') }}">{{__('links.home')}}</a>
                 </li>
+                <li class="nav-item {{ Request::path() ? 'active' : '' }}">
+                    <a class="nav-link" href="{{ route('passwords') }}">{{__('links.keys')}}</a>
+                </li>
             </ul>
 
             <!-- Right Side Of Navbar -->

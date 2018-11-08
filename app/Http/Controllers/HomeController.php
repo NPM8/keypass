@@ -34,11 +34,11 @@ class HomeController extends Controller
      */
     public function passwords()
     {
-        $find = App\Passwords::all();
+        $find = Passwords::all();
         $passwords = [];
         foreach( $find as $key => $pass) {
             $tmp = $pass;
-            $tmp->password;
+            $tmp->password = decrypt($pass->password);
             array_push($passwords,$tmp);
         }
 
@@ -50,7 +50,7 @@ class HomeController extends Controller
 
         $password->name = $request->name;
 
-        $password->password = bcrypt($request->password);
+        $password->password = encrypt($request->password);
 
         if ($request->filled('comment')) {
             $password -> comment = $request -> comment;
