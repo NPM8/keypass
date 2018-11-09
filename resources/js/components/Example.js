@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
 export default class Example extends Component {
-    componentDidMount = () => {
-        axios.get('/user').then(resp => console.log(resp.data))
+    componentDidMount() {
+        console.log(user_id)
+        axios.get('/api/user').then(resp => console.log(resp.data))
     }
 
     render() {
@@ -25,6 +26,6 @@ export default class Example extends Component {
     }
 }
 
-if (document.getElementById('example')) {
-    ReactDOM.render(<Example />, document.getElementById('example'));
+if (document.getElementById('root-tes')) {
+    ReactDOM.render(<Example />, document.getElementById('root-test'));
 }

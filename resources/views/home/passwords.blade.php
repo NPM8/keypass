@@ -1,6 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
+<script>
+    window.user_id = {{ Auth::user()->id }}
+</script>
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -10,25 +13,37 @@
                 </div>
 
                 <div class="card-body">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Name</th>
-                                <th>Password</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($passwords as $password)
-                            <tr>
-                                <td>{{$password -> password}}</td>
-                                <td>{{$password -> name}}</td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                            Add Password
-                        </button>
-                    </table>
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                        Add Password
+                    </button>
+                    <div class="container">
+                        <div class="row">
+                            <div class="col">Name</div>
+                            <div class="col">Password</div>
+                            <div class="col">Url</div>
+                            <div class="col">Username</div>
+                            <div class="col">Comment</div>
+                        </div>
+                        @foreach ($passwords as $password)
+                            <div class="row">
+                                <div class="col">{{$password -> password}}</div>
+                                <div class="col">{{$password -> name}}</div>
+                                <div class="col">{{$password -> url ? $password->url : '---'}}</div>
+                                <div class="col">{{$password -> username ? $password->username : '---'}}</div>
+                                <div class="col">{{$password -> comment ? $password->comment : '---'}}</div>
+                            </div>
+                            @component('modals.modify-password', [
+                                'id' => $password->id,
+                                'name' => $password->name,
+                                'url' => $password->url,
+                                'username' => $password->username,
+                                'comment' => $password->comment,
+                                'password' => $password->password,
+                            ])
+                                Modyfication, {{$password->name}}
+                            @endcomponent
+                        @endforeach
+                        {{--  <div id="root-test">loading ...</div>  --}}
                 </div>
             </div>
         </div>
@@ -44,18 +59,23 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
+      <form action="/home/password/add" id="add-elem" method="post">
       <div class="modal-body">
-        <form action="/home/password/add" method="post">
             @csrf
-            <input type="text" name="name" id="name" placeholder="Put name here">
-            <input type="text" name="">
-        </form>
+            <input type="text" name="name" id="name" placeholder="Name">
+            <input type="password" name="password" placeholder="Password">
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" onclick="$('form#')">Save changes</button>
+        <button type="submit" id="tessst" class="btn btn-primary">Save changes</button>
       </div>
+
+    </form>
     </div>
   </div>
 </div>
 @endsection
+
+@push('scripts')
+    <script src="/js/main-h.js"></script>
+@endpush
