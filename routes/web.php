@@ -21,4 +21,6 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/home/passwords', 'HomeController@passwords')->name('passwords');
 
-Route::get('/home/password/add', 'HomeController@addPassword')->name('add-passwords');
+Route::post('/home/password/add', 'HomeController@addPassword')->name('add-passwords');
+
+// Route::get('/user', 'HomeControler@getpasswords')->name('get-password');
